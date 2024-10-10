@@ -5,6 +5,39 @@
   <h1>Click the button</h1>
   <button>Me!</button>
   <script>
-    
+    class Events {
+            constructor() {
+                this.events = {};
+            }
+
+            on(eventName, callback) {
+                if (!this.events[eventName]) {
+                    this.events[eventName] = [];
+                }
+                this.events[eventName].push(callback);
+            }
+
+            trigger(eventName) {
+                if (this.events[eventName]) {
+                    this.events[eventName].forEach(callback => callback());
+                }
+            }
+
+            off(eventName) {
+                if (this.events[eventName]) {
+                    delete this.events[eventName];
+                }
+            }
+        }
+
+        const events = new Events();
+
+        events.on('buttonClick', () => {
+            alert('Button was clicked!');
+        });
+
+        document.getElementById('myButton').addEventListener('click', () => {
+            events.trigger('buttonClick');
+        });
   </script>
 </body>
